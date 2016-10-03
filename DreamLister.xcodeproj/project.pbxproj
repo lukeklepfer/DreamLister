@@ -26,6 +26,7 @@
 		AD50343F1DA2DD46000AFC93 /* ItemType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5034371DA2DD46000AFC93 /* ItemType+CoreDataProperties.swift */; };
 		AD5034441DA2E172000AFC93 /* MaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5034431DA2E172000AFC93 /* MaterialView.swift */; };
 		AD5034461DA2E3C5000AFC93 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5034451DA2E3C5000AFC93 /* ItemCell.swift */; };
+		AD5034491DA2F7ED000AFC93 /* ItemDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5034481DA2F7ED000AFC93 /* ItemDetailsVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		AD5034371DA2DD46000AFC93 /* ItemType+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ItemType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AD5034431DA2E172000AFC93 /* MaterialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialView.swift; sourceTree = "<group>"; };
 		AD5034451DA2E3C5000AFC93 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		AD5034481DA2F7ED000AFC93 /* ItemDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailsVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,11 +123,11 @@
 		AD5033EA1DA2D428000AFC93 /* DreamLister */ = {
 			isa = PBXGroup;
 			children = (
+				AD5034471DA2F7C6000AFC93 /* Controller */,
 				AD5034421DA2E148000AFC93 /* View */,
 				AD5034411DA2DD54000AFC93 /* Generated */,
 				AD5034401DA2DD4C000AFC93 /* Model */,
 				AD5033EB1DA2D428000AFC93 /* AppDelegate.swift */,
-				AD5033ED1DA2D428000AFC93 /* MainVC.swift */,
 				AD5033EF1DA2D428000AFC93 /* Main.storyboard */,
 				AD5033F51DA2D429000AFC93 /* Assets.xcassets */,
 				AD5033F71DA2D429000AFC93 /* LaunchScreen.storyboard */,
@@ -183,6 +185,15 @@
 				AD5034451DA2E3C5000AFC93 /* ItemCell.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		AD5034471DA2F7C6000AFC93 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AD5033ED1DA2D428000AFC93 /* MainVC.swift */,
+				AD5034481DA2F7ED000AFC93 /* ItemDetailsVC.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +339,7 @@
 				AD50342F1DA2DB64000AFC93 /* CustomTextField.swift in Sources */,
 				AD50343C1DA2DD46000AFC93 /* Store+CoreDataClass.swift in Sources */,
 				AD50343D1DA2DD46000AFC93 /* Store+CoreDataProperties.swift in Sources */,
+				AD5034491DA2F7ED000AFC93 /* ItemDetailsVC.swift in Sources */,
 				AD5033EE1DA2D428000AFC93 /* MainVC.swift in Sources */,
 				AD50343F1DA2DD46000AFC93 /* ItemType+CoreDataProperties.swift in Sources */,
 				AD5033EC1DA2D428000AFC93 /* AppDelegate.swift in Sources */,
@@ -577,6 +589,7 @@
 				AD5034151DA2D42C000AFC93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AD5034161DA2D42C000AFC93 /* Build configuration list for PBXNativeTarget "DreamListerTests" */ = {
 			isa = XCConfigurationList;
@@ -585,6 +598,7 @@
 				AD5034181DA2D42C000AFC93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AD5034191DA2D42C000AFC93 /* Build configuration list for PBXNativeTarget "DreamListerUITests" */ = {
 			isa = XCConfigurationList;
@@ -593,6 +607,7 @@
 				AD50341B1DA2D42C000AFC93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
