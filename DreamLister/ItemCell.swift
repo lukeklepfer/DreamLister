@@ -11,7 +11,7 @@ import UIKit
 class ItemCell: UITableViewCell {
 
     
-    @IBOutlet weak var thumbImg: UIView!
+    @IBOutlet weak var thumb: UIImageView!
     @IBOutlet weak var priceLbl: UILabel!
     @IBOutlet weak var detailLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
@@ -21,6 +21,7 @@ class ItemCell: UITableViewCell {
         titleLbl.text = item.title
         priceLbl.text = "$\(item.price)"
         detailLbl.text = item.details
+        thumb.image = item.toImage?.image as? UIImage
         
     }
     

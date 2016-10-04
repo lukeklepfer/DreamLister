@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var storePicker: UIPickerView!
     @IBOutlet weak var titleField: CustomTextField!
@@ -17,14 +17,17 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     @IBOutlet weak var detailsField: CustomTextField!
     @IBOutlet weak var image: UIImageView!
     
-    
+    var itemToEdit: Item?
     var stores = [Store]()
+    var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         storePicker.delegate = self
         storePicker.dataSource = self
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
         
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.plain, target: nil, action: nil)
@@ -32,6 +35,10 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         
         //testStores()
         getStores()
+        
+        if itemToEdit != nil {
+            loadItemData()
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -75,7 +82,21 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
     }
     
     @IBAction func savePressed(_ sender: AnyObject) {
-        let newItem = Item(context: context)
+        
+        var newItem: Item!
+        let picture = Image(context: context)
+        picture.image = image.image
+        
+        if itemToEdit == nil {
+            
+            newItem = Item(context: context)
+            
+        }else{
+            
+            newItem = itemToEdit
+        
+        }
+        newItem.toImage = picture
         
         if let title = titleField.text{
             newItem.title = title
@@ -92,11 +113,19 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         _ = navigationController?.popViewController(animated: true)//return to first view
     }
     
-    @IBAction func imageTapped(_ sender: AnyObject) {
-    
-    
+    @IBAction func imagePressed(_ sender: AnyObject) {
+        
+        present(imagePicker, animated: true, completion: nil)
+        
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let img = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            image.image = img
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
     func getStores(){
         let fetchReq: NSFetchRequest<Store> = Store.fetchRequest()
         
@@ -107,5 +136,45 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
             //handle error
         }
     }
+    
+    func loadItemData() {
+        
+        if let item = itemToEdit {
+            titleField.text = item.title
+            priceField.text = "\(item.price)"
+            detailsField.text = item.details
+            image.image = item.toImage?.image as? UIImage
+            
+            if let store = item.toStore {
+                var index = 0
+                repeat {
+                    
+                    let s =  stores[index]
+                    if s.name == store.name {
+                        
+                        storePicker.selectRow(index, inComponent: 0, animated: false)
+                        break
+                    }
+                    index += 1
+                }while (index < stores.count)
+            }
+        }
+    }
+    
+    
+    @IBAction func deletePressed(_ sender: AnyObject) {
+        
+        if itemToEdit != nil {
+            context.delete(itemToEdit!)
+            ad.saveContext()
+        }
+       _ = navigationController?.popViewController(animated: true)
+    }
+    
+    
+    
+    
+    
+    
 
 }

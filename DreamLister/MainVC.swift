@@ -46,6 +46,28 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let objs = fetchedResultsController.fetchedObjects , objs.count > 0 { //where count is greater than 0
+            
+            let item = objs[indexPath.row]
+            performSegue(withIdentifier: "ItemDetailsVC", sender: item)
+            
+        }
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "ItemDetailsVC" {
+            if let destination = segue.destination as? ItemDetailsVC {
+                if let item = sender as? Item {
+                    destination.itemToEdit = item
+                }
+            }
+        }
+        
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         
         if let sections = fetchedResultsController.sections {
@@ -72,7 +94,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     func attemptFetch() {
         let fetchReq: NSFetchRequest<Item> = Item.fetchRequest()
         let dateSort = NSSortDescriptor(key: "created", ascending: false)
-        fetchReq.sortDescriptors = [dateSort]
+        let priceSort = NSSortDescriptor(key: "price", ascending: true)
+        let titleSort =  NSSortDescriptor(key: "title", ascending: true)
+        
+        if segmentController.selectedSegmentIndex == 0{
+            fetchReq.sortDescriptors = [dateSort]
+        }else if segmentController.selectedSegmentIndex == 1 {
+            fetchReq.sortDescriptors = [priceSort]
+        }else if segmentController.selectedSegmentIndex == 2 {
+            fetchReq.sortDescriptors = [titleSort]
+        }
         
         let controller = NSFetchedResultsController(fetchRequest: fetchReq, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         controller.delegate = self
@@ -87,6 +118,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         }
         
     }
+    
+    @IBAction func segmentChange(_ sender: AnyObject) {
+    
+        attemptFetch()
+        tableView.reloadData()
+        print(sender.selectedSegmentIndex)
+    
+    }
+    
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
